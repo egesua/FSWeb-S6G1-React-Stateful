@@ -11,7 +11,7 @@ Aynı zaman içinde yalnız bir harika programcıyı öne çıkarabiliriz.
 Yorumları takip edin.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 /* ADIM 0  */
 
 
@@ -28,7 +28,8 @@ export const enIyilerListesi = [
 ];
 
 export default function Programcilar() {
-  // İki state dilimine ihtiyacımız olduğundan, state hooku iki kez kullanmamız gerekecek..
+ const [programcilar, setProgramcilar] = useState(enIyilerListesi);
+ const [oneCikan, setOneCikan] = useState("");
   // Bir yanda programcılar listesi, diğer yanda öne çıkan programcının idsi.
 
 	
@@ -43,7 +44,7 @@ export default function Programcilar() {
   const stil = {
     fontSize: '1.5em',
     marginTop: '0.5em',
-    color: 'royalblue', // 🤔 kutlarken renk gold'a dönecek
+    color: oneCikan ? "gold" : "royalblue",
   };
 
   return (
@@ -55,11 +56,11 @@ export default function Programcilar() {
           // Şöyle diyebiliriz: "aa bu çalışıyor!" Ama programcilar bir state diliminden gelmiyorsa,
           // asla yeni programci ekleyemeyiz, programcilari düzenleyemeyiz ya da silemeyiz. Düzeltin!
           " */
-          enIyilerListesi.map(dev =>
-            <div className='programmer' key={dev.id}>
-              {dev.isim} <button onClick={() => {/* burada dev.id 'yi öne çıkan id'ye atayın */ }}>Kutla</button>
+          programcilar.map((dev) => (
+            <div className = 'programmer' key = {dev.id}>
+              {dev.isim}{" "} <button onClick={() => {setOneCikan(dev.id) }}>Kutla</button>
             </div>
-          )
+          ))
         }
       </div>
       <div id='featured' style={stil}>
@@ -67,7 +68,7 @@ export default function Programcilar() {
           // Üçlüler, bir şeyin "gerçekliğine" bağlı olarak "bir şeyi veya diğerini" ifade etmek için harikadır..
           // Sözde-kod: öne çıkan true ise metin 1'i oluşturun, aksi takdirde metin 2'yi oluşturun..
           // Sabit kodlanmış false'u doğru değişkenle değiştirin.
-          false
+          oneCikan
             ? `🎉 Hadi ${oneCikaninIsmi()}'ı kutlayalım! 🥳`
             : 'Harika bir programcı seçin'
         }
